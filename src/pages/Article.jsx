@@ -1,3 +1,4 @@
+import Typography from '@mui/material/Typography';
 import ContentPage from '../components/ContentPage.jsx';
 import images from '../assets/images.js';
 import usePageTitle from '../hooks/usePageTitle.js';
@@ -8,15 +9,25 @@ export default function Article({ article }) {
 
   return (
     <ContentPage>
-      <h1>{article.title}</h1>
+      <Typography component="h1" variant="h1">
+        {article.title}
+      </Typography>
       {article.blocks.map((block, index) => {
         switch (block.type) {
           case 'h2':
-            return <h2 key={index}>{block.text}</h2>;
+            return (
+              <Typography key={index} component="h2" variant="h2">
+                {block.text}
+              </Typography>
+            );
           case 'p':
-            return <p key={index}>{block.text}</p>;
+            return (
+              <Typography key={index} component="p">
+                {block.text}
+              </Typography>
+            );
           case 'img':
-            return <img key={index} className="img-poluicao" src={images[block.image]} alt={block.alt} />;
+            return <img key={index} src={images[block.image]} alt={block.alt} />;
           case 'list':
             return (
               <ul key={index}>

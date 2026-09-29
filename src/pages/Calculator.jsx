@@ -1,9 +1,16 @@
 import { useMemo, useState } from 'react';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import LinearProgress from '@mui/material/LinearProgress';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Header from '../components/Header.jsx';
 import usePageTitle from '../hooks/usePageTitle.js';
 import { questions } from '../data/questions.js';
 import { calculateFootprint, messageForFootprint, nextQuestionIndex } from '../utils/carbonFootprint.js';
-import './Calculator.css';
 
 const STEP_ANSWERING = 'answering';
 const STEP_LOADING = 'loading';
@@ -28,12 +35,10 @@ export default function Calculator() {
 
   const handleNext = () => {
     if (!canAdvance) return;
-
     if (isLast) {
       finish();
       return;
     }
-
     setCurrentIndex((prev) => nextQuestionIndex(prev, answers));
   };
 
@@ -43,12 +48,11 @@ export default function Calculator() {
 
   const finish = () => {
     setStep(STEP_LOADING);
-    // Mesmo tempo de "cálculo" do original, para manter o efeito do spinner.
     setTimeout(() => {
       const total = calculateFootprint(answers);
       setResult({ total, message: messageForFootprint(total) });
       setStep(STEP_RESULT);
-    }, 1500);
+    }, 1200);
   };
 
   const restart = () => {
@@ -59,76 +63,104 @@ export default function Calculator() {
   };
 
   return (
-    <div className="calculator-page">
+    <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
       <Header />
+      <Container maxWidth="sm" sx={{ py: { xs: 5, md: 8 } }}>
+        <LinearProgress
+          variant="determinate"
+          value={progress}
+          sx={{ height: 8, borderRadius: 999, mb: 3, backgroundColor: 'divider' }}
+          color="secondary"
+        />
 
-      <div className="calculator-page__body">
-        <div className="calculator">
-          <div className="calculator__progress-track">
-            <div className="calculator__progress-bar" style={{ width: `${progress}%` }} />
-          </div>
-
+        <Paper
+          sx={{
+            p: { xs: 3, md: 5 },
+            minHeight: 380,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: step === STEP_ANSWERING ? 'space-between' : 'center',
+            alignItems: step === STEP_ANSWERING ? 'stretch' : 'center',
+            textAlign: step === STEP_ANSWERING ? 'left' : 'center',
+            animation: 'fade-in-up 0.35s ease',
+          }}
+        >
           {step === STEP_LOADING && (
-            <div className="calculator__card calculator__card--center">
-              <h2>Calculando sua pegada de carbono...</h2>
-              <div className="calculator__spinner" />
-            </div>
+            <>
+              <Typography variant="h5" sx={{ mb: 3 }}>
+                Calculando sua pegada de carbono...
+              </Typography>
+              <CircularProgress color="secondary" size={56} thickness={4} />
+            </>
           )}
 
           {step === STEP_ANSWERING && (
-            <div className="calculator__card">
-              <h2 className="calculator__question">{question.question}</h2>
-              <div className="calculator__options">
-                {question.options.map((option) => (
-                  <button
+            <Typography variant="h5" sx={{ mb: 4 }}>
+              {question.question}
+            </Typography>
+          )}
+
+          {step === STEP_ANSWERING && (
+            <Stack spacing={1.5}>
+              {question.options.map((option) => {
+                const selected = answers[currentIndex] === option.value;
+                return (
+                  <Button
                     key={option.value}
-                    type="button"
-                    className={
-                      'calculator__option' +
-                      (answers[currentIndex] === option.value ? ' calculator__option--selected' : '')
-                    }
                     onClick={() => selectOption(option.value)}
+                    variant={selected ? 'contained' : 'outlined'}
+                    color={selected ? 'primary' : 'inherit'}
+                    sx={{
+                      justifyContent: 'flex-start',
+                      py: 1.5,
+                      px: 3,
+                      borderRadius: 3,
+                      borderColor: 'divider',
+                      color: selected ? undefined : 'text.primary',
+                    }}
                   >
                     {option.text}
-                  </button>
-                ))}
-              </div>
-            </div>
+                  </Button>
+                );
+              })}
+            </Stack>
           )}
 
           {step === STEP_RESULT && result && (
-            <div className="calculator__card calculator__card--center">
-              <h2>Seu resultado:</h2>
-              <p className="calculator__result-value">{result.total} kg de carbono por semana</p>
-              <p className="calculator__result-message">{result.message}</p>
-              <button type="button" className="calculator__restart" onClick={restart}>
+            <>
+              <Typography variant="h5">Seu resultado:</Typography>
+              <Typography variant="h3" color="primary.main" sx={{ my: 2 }}>
+                {result.total} kg de carbono por semana
+              </Typography>
+              <Typography color="text.secondary" sx={{ mb: 3, maxWidth: 400 }}>
+                {result.message}
+              </Typography>
+              <Button onClick={restart} variant="contained" color="secondary" size="large">
                 Reiniciar
-              </button>
-            </div>
+              </Button>
+            </>
           )}
+        </Paper>
 
-          {step === STEP_ANSWERING && (
-            <div className="calculator__nav">
-              <button
-                type="button"
-                className="calculator__nav-btn calculator__nav-btn--back"
-                onClick={handleBack}
-                disabled={currentIndex === 0}
-              >
-                Anterior
-              </button>
-              <button
-                type="button"
-                className="calculator__nav-btn calculator__nav-btn--next"
-                onClick={handleNext}
-                disabled={!canAdvance}
-              >
-                {isLast ? 'Calcular' : 'Próximo'}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+        {step === STEP_ANSWERING && (
+          <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
+            <Button
+              onClick={handleBack}
+              disabled={currentIndex === 0}
+              variant="outlined"
+              color="inherit"
+              fullWidth
+              size="large"
+              sx={{ borderColor: 'divider', color: 'text.primary' }}
+            >
+              Anterior
+            </Button>
+            <Button onClick={handleNext} disabled={!canAdvance} variant="contained" fullWidth size="large">
+              {isLast ? 'Calcular' : 'Próximo'}
+            </Button>
+          </Stack>
+        )}
+      </Container>
+    </Box>
   );
 }
