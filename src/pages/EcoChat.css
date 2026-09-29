@@ -1,0 +1,21 @@
+.ecochat-page {
+  height: 100%;
+  min-height: 100vh;
+  background-color: #005d6d;
+  position: relative;
+}
+
+.ecochat-page__loading {
+  text-align: center;
+  padding-top: 70px;
+}
+
+.ecochat-page__loading h1 {
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.ecochat-page__widget {
+  width: 100%;
+  min-height: 80vh;
+}

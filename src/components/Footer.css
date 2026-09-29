@@ -1,0 +1,70 @@
+.novo-footer {
+  width: 100%;
+  background-color: #00363f;
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 40px 20px;
+  background-color: #004853;
+}
+
+.footer-col {
+  flex: 1 1 220px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #00b4cc;
+}
+
+.footer-col a {
+  color: #f0f0f0;
+  font-weight: 500;
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover {
+  color: #0dffea;
+}
+
+.footer-logo {
+  width: 160px;
+  margin-bottom: 10px;
+}
+
+.footer-btn {
+  background-color: #0d8aa0;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  display: inline-block;
+  width: 100%;
+  max-width: 220px;
+}
+
+.footer-btn:hover {
+  background-color: #2397ab;
+}
+
+.footer-bottom {
+  background-color: #002d33;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+}

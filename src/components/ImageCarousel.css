@@ -1,0 +1,97 @@
+.carousel {
+  position: relative;
+  background: #000d0f;
+}
+
+.carousel__image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.carousel__image {
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  height: 600px;
+  width: 100%;
+  opacity: 0.5;
+  display: block;
+}
+
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  font-size: 30px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 100%;
+}
+
+.carousel__arrow--prev {
+  left: 10px;
+}
+
+.carousel__arrow--next {
+  right: 10px;
+}
+
+.carousel__content {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+}
+
+.carousel__content h1 {
+  text-align: left;
+  font-weight: 200;
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 60px;
+}
+
+.carousel__content p {
+  position: relative;
+  margin-top: 3%;
+  text-align: left;
+  font-weight: 400;
+  font-size: 20px;
+  color: white;
+}
+
+.carousel__spacer {
+  margin: 5% 0;
+}
+
+.carousel__link {
+  transition: all ease-in-out 0.1s;
+  border-radius: 5px;
+  position: relative;
+  background-color: #0d8aa0;
+  padding: 2% 3%;
+  display: inline-block;
+}
+
+.carousel__link:hover {
+  background-color: #2397ab;
+}
+
+@media (max-width: 920px) {
+  .carousel__content {
+    left: 5%;
+  }
+
+  .carousel__arrow--prev,
+  .carousel__arrow--next {
+    top: 90%;
+    font-size: 25px;
+    height: 50px;
+    width: 50px;
+  }
+}

@@ -1,0 +1,70 @@
+.site-header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Home: fixo e transparente sobre o banner */
+.site-header--overlay {
+  position: fixed;
+  background-color: transparent;
+  padding: 10px 0;
+}
+
+.site-header--overlay.is-scrolled {
+  background-color: #005d6d;
+}
+
+/* Demais páginas: barra sólida que acompanha a rolagem */
+.site-header--solid {
+  position: sticky;
+  background-color: #005d6d;
+  border-bottom: 2px solid #0097b2;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 5px;
+}
+
+.site-header--solid .site-header__nav {
+  min-height: 90px;
+}
+
+.site-header a {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #f6f6f6;
+  text-decoration: none;
+  transition: linear 0.08s;
+}
+
+.site-header--solid .site-header__link {
+  font-size: 22px;
+}
+
+.site-header__link:hover {
+  border-bottom: solid 3px #ffffff;
+}
+
+@media (max-width: 768px) {
+  .site-header .site-header__nav {
+    flex-direction: column;
+    min-height: auto;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .site-header__nav img {
+    width: 120px;
+  }
+
+  .site-header__link {
+    display: none;
+  }
+}
